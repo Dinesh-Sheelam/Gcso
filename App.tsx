@@ -182,30 +182,34 @@ const App: React.FC = () => {
           {/* Asset Planning Module */}
           <button 
             onClick={() => !isModuleLocked('asset') && setActiveModule('asset')} 
-            className={`group relative border rounded-[2rem] p-6 text-left transition-all shadow-sm ${
+            className={`group relative border rounded-[2rem] p-6 text-left transition-all shadow-sm flex flex-col ${
               isModuleLocked('asset') 
                 ? 'bg-slate-50 border-slate-200 cursor-not-allowed opacity-75' 
                 : 'bg-white border-slate-100 hover:scale-[1.02] hover:shadow-2xl hover:shadow-slate-200 hover:border-red-600'
             }`}
           >
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
-              isModuleLocked('asset') 
-                ? 'bg-slate-200' 
-                : 'bg-red-50 group-hover:bg-red-600'
-            }`}>
-              {isModuleLocked('asset') ? (
-                <Icons.Lock className="w-6 h-6 text-slate-400" />
-              ) : (
-                <Icons.Project className="w-6 h-6 text-red-600 group-hover:text-white transition-colors" />
-              )}
+            <div className="flex items-start gap-4 mb-4">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                isModuleLocked('asset') 
+                  ? 'bg-slate-200' 
+                  : 'bg-red-50 group-hover:bg-red-600'
+              }`}>
+                {isModuleLocked('asset') ? (
+                  <Icons.Lock className="w-6 h-6 text-slate-400" />
+                ) : (
+                  <Icons.Project className="w-6 h-6 text-red-600 group-hover:text-white transition-colors" />
+                )}
+              </div>
+              <div>
+                <h2 className={`text-xl font-bold mb-2 ${isModuleLocked('asset') ? 'text-slate-400' : 'text-slate-900'}`}>
+                  Asset Innovation Planning
+                </h2>
+                <p className="text-slate-500 text-sm leading-relaxed min-h-[40px]">
+                  Strategize early-stage asset lifecycles and innovation captures.
+                </p>
+              </div>
             </div>
-            <h2 className={`text-xl font-bold mb-2 ${isModuleLocked('asset') ? 'text-slate-400' : 'text-slate-900'}`}>
-              Asset Innovation Planning
-            </h2>
-            <p className="text-slate-500 text-sm leading-relaxed mb-6 min-h-[40px]">
-              Strategize early-stage asset lifecycles and innovation captures.
-            </p>
-            <div className={`flex items-center font-bold text-sm transition-transform ${
+            <div className={`flex items-center font-bold text-sm transition-transform mt-auto ${
               isModuleLocked('asset') 
                 ? 'text-slate-400' 
                 : 'text-red-600 group-hover:translate-x-1'
@@ -221,30 +225,34 @@ const App: React.FC = () => {
           {/* Launch Planning Module */}
           <button 
             onClick={() => !isModuleLocked('launch') && setActiveModule('launch')} 
-            className={`group relative border rounded-[2rem] p-6 text-left transition-all shadow-sm ${
+            className={`group relative border rounded-[2rem] p-6 text-left transition-all shadow-sm flex flex-col ${
               isModuleLocked('launch') 
                 ? 'bg-slate-50 border-slate-200 cursor-not-allowed opacity-75' 
                 : 'bg-white border-slate-100 hover:scale-[1.02] hover:shadow-2xl hover:shadow-slate-200 hover:border-emerald-600'
             }`}
           >
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
-              isModuleLocked('launch') 
-                ? 'bg-slate-200' 
-                : 'bg-emerald-50 group-hover:bg-emerald-600'
-            }`}>
-              {isModuleLocked('launch') ? (
-                <Icons.Lock className="w-6 h-6 text-slate-400" />
-              ) : (
-                <Icons.Launch className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors" />
-              )}
+            <div className="flex items-start gap-4 mb-4">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                isModuleLocked('launch') 
+                  ? 'bg-slate-200' 
+                  : 'bg-emerald-50 group-hover:bg-emerald-600'
+              }`}>
+                {isModuleLocked('launch') ? (
+                  <Icons.Lock className="w-6 h-6 text-slate-400" />
+                ) : (
+                  <Icons.Launch className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors" />
+                )}
+              </div>
+              <div>
+                <h2 className={`text-xl font-bold mb-2 ${isModuleLocked('launch') ? 'text-slate-400' : 'text-slate-900'}`}>
+                  Launch Planning
+                </h2>
+                <p className="text-slate-500 text-sm leading-relaxed min-h-[40px]">
+                  Manage execution timelines and commercial readiness for product market entry.
+                </p>
+              </div>
             </div>
-            <h2 className={`text-xl font-bold mb-2 ${isModuleLocked('launch') ? 'text-slate-400' : 'text-slate-900'}`}>
-              Launch Planning
-            </h2>
-            <p className="text-slate-500 text-sm leading-relaxed mb-6 min-h-[40px]">
-              Manage execution timelines and commercial readiness for product market entry.
-            </p>
-            <div className={`flex items-center font-bold text-sm transition-transform ${
+            <div className={`flex items-center font-bold text-sm transition-transform mt-auto ${
               isModuleLocked('launch') 
                 ? 'text-slate-400' 
                 : 'text-emerald-600 group-hover:translate-x-1'
@@ -260,30 +268,34 @@ const App: React.FC = () => {
           {/* Governance Module */}
           <button 
             onClick={() => !isModuleLocked('governance') && setActiveModule('governance')} 
-            className={`group relative border rounded-[2rem] p-6 text-left transition-all shadow-sm ${
+            className={`group relative border rounded-[2rem] p-6 text-left transition-all shadow-sm flex flex-col ${
               isModuleLocked('governance') 
                 ? 'bg-slate-50 border-slate-200 cursor-not-allowed opacity-75' 
                 : 'bg-white border-slate-100 hover:scale-[1.02] hover:shadow-2xl hover:shadow-slate-200 hover:border-indigo-600'
             }`}
           >
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
-              isModuleLocked('governance') 
-                ? 'bg-slate-200' 
-                : 'bg-indigo-50 group-hover:bg-indigo-600'
-            }`}>
-              {isModuleLocked('governance') ? (
-                <Icons.Lock className="w-6 h-6 text-slate-400" />
-              ) : (
-                <Icons.Governance className="w-6 h-6 text-indigo-600 group-hover:text-white transition-colors" />
-              )}
+            <div className="flex items-start gap-4 mb-4">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                isModuleLocked('governance') 
+                  ? 'bg-slate-200' 
+                  : 'bg-indigo-50 group-hover:bg-indigo-600'
+              }`}>
+                {isModuleLocked('governance') ? (
+                  <Icons.Lock className="w-6 h-6 text-slate-400" />
+                ) : (
+                  <Icons.Governance className="w-6 h-6 text-indigo-600 group-hover:text-white transition-colors" />
+                )}
+              </div>
+              <div>
+                <h2 className={`text-xl font-bold mb-2 ${isModuleLocked('governance') ? 'text-slate-400' : 'text-slate-900'}`}>
+                  Administration
+                </h2>
+                <p className="text-slate-500 text-sm leading-relaxed min-h-[40px]">
+                  Control permissions across AIP and Launch Hub independently.
+                </p>
+              </div>
             </div>
-            <h2 className={`text-xl font-bold mb-2 ${isModuleLocked('governance') ? 'text-slate-400' : 'text-slate-900'}`}>
-              Administration
-            </h2>
-            <p className="text-slate-500 text-sm leading-relaxed mb-6 min-h-[40px]">
-              Control permissions across AIP and Launch Hub independently.
-            </p>
-            <div className={`flex items-center font-bold text-sm transition-transform ${
+            <div className={`flex items-center font-bold text-sm transition-transform mt-auto ${
               isModuleLocked('governance') 
                 ? 'text-slate-400' 
                 : 'text-indigo-600 group-hover:translate-x-1'

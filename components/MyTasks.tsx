@@ -36,7 +36,7 @@ const TASKS = [
     priority: "high", timestamp: "10 min ago",
     data: {
       invitedBy: "Sarah Mitchell",
-      project: "Compound XR-447",
+      project: "Project 1",
       ta: "Oncology", phase: "Phase II",
       role: "Co-lead",
       message: "You're needed as backup lead for the upcoming AIP workshop.",
@@ -46,7 +46,7 @@ const TASKS = [
     id: 2, module: "aip", type: "innovation_review", done: false, read: false,
     priority: "medium", timestamp: "2h ago",
     data: {
-      project: "BioPlex Delivery",
+      project: "Project 2",
       count: 3,
       submittedBy: "James Parker",
       innovations: [
@@ -60,7 +60,7 @@ const TASKS = [
     id: 3, module: "aip", type: "criteria_missing", done: false, read: true,
     priority: "low", timestamp: "1 day ago",
     data: {
-      project: "Compound XR-447",
+      project: "Project 1",
       innovations: [
         { title: "Lifecycle extension via new dosage form", missing: ["financial", "protection"] },
         { title: "Access programme for emerging markets",   missing: ["market understanding"] },
@@ -72,7 +72,7 @@ const TASKS = [
     id: 4, module: "aip", type: "document_missing", done: false, read: true,
     priority: "high", timestamp: "3h ago",
     data: {
-      project: "Compound XR-447",
+      project: "Project 1",
       missingDocs: ["LRFP", "Target Product Profile"],
       presentDocs: ["CDP", "Market Analysis"],
       workshopDate: "Mar 14, 2025",
@@ -83,7 +83,7 @@ const TASKS = [
     id: 5, module: "launch", type: "milestone_risk", done: false, read: false,
     priority: "critical", timestamp: "30 min ago",
     data: {
-      project: "BioPlex Launch Plan",
+      project: "Project 2 Launch Plan",
       milestone: "Market Rollout",
       originalDate: "Jun 1, 2025",
       newDate: "Jun 24, 2025",
@@ -100,7 +100,7 @@ const TASKS = [
     id: 6, module: "launch", type: "approval_override", done: false, read: true,
     priority: "high", timestamp: "Yesterday",
     data: {
-      project: "BioPlex Launch Plan",
+      project: "Project 2 Launch Plan",
       requestedBy: "Nina Torres",
       milestone: "FDA Submission",
       from: "Mar 15, 2025",
@@ -112,7 +112,7 @@ const TASKS = [
     id: 7, module: "launch", type: "scenario_shared", done: false, read: true,
     priority: "low", timestamp: "2 days ago",
     data: {
-      project: "BioPlex Launch Plan",
+      project: "Project 2 Launch Plan",
       sharedBy: "James Parker",
       scenario: "Medical-led Q3 Launch",
       description: "Shifts commercial readiness milestones by 6 weeks to prioritise medical affairs activities.",
@@ -125,7 +125,7 @@ const TASKS = [
     priority: "medium", timestamp: "4h ago",
     data: {
       requestedBy: "Lena Hoffmann",
-      project: "Compound XR-447",
+      project: "Project 1",
       requestedRole: "Read/Write",
       currentRole: "None",
       reason: "Joining as regional launch lead for EMEA, needs access to AIP innovation data.",
@@ -136,7 +136,7 @@ const TASKS = [
     priority: "low", timestamp: "3 days ago",
     data: {
       changedBy: "Sarah Mitchell",
-      project: "BioPlex Delivery",
+      project: "Project 2",
       field: "Budget",
       from: "Read/Write",
       to: "Read Only",
@@ -438,7 +438,7 @@ function ActionBtn({ label, primary, color, bg, onClick }: any) {
 //  TASK CARD WRAPPER
 // ─────────────────────────────────────────────────────────────
 
-function TaskCard({ task, onDone }: any) {
+function TaskCard({ task, onDone, onRead }: any) {
   const [expanded, setExpanded] = useState(false);
   const cfg = MODULE_CONFIGS[task.module];
   const pri = PRIORITY[task.priority];
@@ -477,8 +477,24 @@ function TaskCard({ task, onDone }: any) {
           <div style={{ fontSize: 11, color: "#ccc", marginTop: 4 }}>{task.timestamp}</div>
         </div>
 
-        {/* Expand chevron */}
-        <div style={{ color: "#ccc", fontSize: 16, flexShrink: 0, transition: "transform 0.2s", transform: expanded ? "rotate(180deg)" : "none" }}>⌄</div>
+        {/* Expand chevron and actions */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+          {!task.read && !task.done && (
+            <button 
+              onClick={(e) => { e.stopPropagation(); onRead(task.id); }}
+              title="Mark as read"
+              style={{ background: "transparent", border: "none", cursor: "pointer", color: "#94a3b8", padding: 6, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", transition: "background 0.2s" }}
+              onMouseEnter={(e: any) => { e.currentTarget.style.background = "#f1f5f9"; e.currentTarget.style.color = "#0f172a"; }}
+              onMouseLeave={(e: any) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#94a3b8"; }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </button>
+          )}
+          <div style={{ color: "#ccc", fontSize: 16, transition: "transform 0.2s", transform: expanded ? "rotate(180deg)" : "none", padding: 4 }}>⌄</div>
+        </div>
       </div>
 
       {/* Card Body — module-specific, only when expanded */}
@@ -486,6 +502,11 @@ function TaskCard({ task, onDone }: any) {
         <div style={{ padding: "0 18px 18px 68px", borderTop: "1px solid #f8f8f6" }}>
           <div style={{ paddingTop: 14 }}>
             {CardBody ? <CardBody data={task.data} cfg={cfg} actions={{ done: () => onDone(task.id) }} /> : null}
+            {!task.read && !task.done && (
+              <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px dashed #eee", display: "flex", justifyContent: "flex-end" }}>
+                <ActionBtn label="Mark as Read" color="#64748b" bg="#f1f5f9" onClick={() => onRead(task.id)} />
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -521,6 +542,7 @@ export default function MyTasks() {
   const [statusFilter, setStatus] = useState("pending");
 
   const markDone = (id: any) => setTasks(p => p.map(t => t.id === id ? { ...t, done: true, read: true } : t));
+  const markRead = (id: any) => setTasks(p => p.map(t => t.id === id ? { ...t, read: true } : t));
 
   const visible = tasks.filter(t => {
     const modMatch = moduleFilter === "all" || t.module === moduleFilter;
@@ -541,7 +563,7 @@ export default function MyTasks() {
 
       {/* Nav */}
       <nav style={{ background: "#fff", borderBottom: "1px solid #e2e8f0", padding: "0 28px", height: 56, display: "flex", alignItems: "center", gap: 14, boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)", borderTopLeftRadius: "1.5rem", borderTopRightRadius: "1.5rem" }}>
-        <span style={{ fontWeight: 700, fontSize: 14, color: "#0f172a" }}>My Tasks</span>
+        <span style={{ fontWeight: 700, fontSize: 14, color: "#0f172a" }}>My Cockpit</span>
         <span style={{ fontSize: 13, color: "#94a3b8" }}>·</span>
         <span style={{ fontSize: 13, color: "#64748b" }}>Each task card adapts to its module</span>
         {pendingByModule("all") > 0 && (
@@ -565,16 +587,6 @@ export default function MyTasks() {
               </button>
             ))}
           </div>
-
-          {/* Status filter */}
-          <div style={{ display: "flex", gap: 4, background: "#fff", borderRadius: 12, padding: 4, border: "1px solid #e2e8f0", marginLeft: "auto" }}>
-            {[["pending", "Pending"], ["done", "Done"], ["all", "All"]].map(([val, label]) => (
-              <button key={val} className="filter-btn" onClick={() => setStatus(val)}
-                style={{ padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, background: statusFilter === val ? "#0f172a" : "transparent", color: statusFilter === val ? "#fff" : "#64748b" }}>
-                {label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Task Cards */}
@@ -586,7 +598,7 @@ export default function MyTasks() {
               <div style={{ fontSize: 13, color: "#94a3b8", marginTop: 4 }}>No tasks in this view</div>
             </div>
           ) : (
-            visible.map(task => <TaskCard key={task.id} task={task} onDone={markDone} />)
+            visible.map(task => <TaskCard key={task.id} task={task} onDone={markDone} onRead={markRead} />)
           )}
         </div>
       </div>
